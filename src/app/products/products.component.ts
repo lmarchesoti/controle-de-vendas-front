@@ -22,4 +22,17 @@ export class ProductsComponent implements OnInit {
         .subscribe(products => this.products = products);
   }
 
+  add(name: string, price: number): void {
+    name = name.trim();
+    if (!name || !price) { return; }
+    this.productService.addProduct({ name, price } as Product)
+      .subscribe(product => {
+        this.products.push(product);
+      });
+  }
+
+  delete(product: Product): void {
+    this.products = this.products.filter(p => p !== product);
+    this.productService.deleteProduct(product).subscribe();
+  }
 }
