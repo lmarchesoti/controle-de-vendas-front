@@ -17,7 +17,9 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 4, name: 'Power bank', price: 70.99 }
     ];
 
-    const sales = [];
+    const sales = [
+      { id: 0, salespersonName: 'Jonathan Smith', productName: 'Pen Drive', price: 15.00 }
+    ];
 
     const salespeople = [
       { id: 0, name: 'Jonathan Smith' },

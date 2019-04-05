@@ -1,3 +1,23 @@
-<p>
-  sales works!
-</p>
+<h2>Vendas</h2>
+<div>
+  <label>Vendedor:
+    <select #salesperson>
+      <option value=''></option>
+      <option *ngFor="let salesperson of salespeople" [value]="salesperson.id">{{salesperson.name}}</option>
+    </select>
+  </label>
+  <label>Produto:
+    <select #product>
+      <option value=''></option>
+      <option *ngFor="let product of products" [value]="product.id">{{product.name}}</option>
+    </select>
+  </label>
+  <button (click)="add(salesperson.options[salesperson.options.selectedIndex].value, product.options[product.options.selectedIndex].value); salesperson.options.selectedIndex=0; product.options.selectedIndex=0">
+    Adicionar
+  </button>
+</div>
+<ul class="sales">
+  <li *ngFor="let sale of sales">
+    <span class="badge">{{sale.id}}</span> {{sale.salespersonName}} {{sale.productName}} {{sale.price}} {{sale.price * 0.05}}
+  </li>
+</ul>
