@@ -2,26 +2,35 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 import { Product } from './product';
+import { environment } from 'src/environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
+
+interface ProductGetResponse {
+  _embedded: {
+    products: Product[],
+    _links: {self: {href: string}};
+  };
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  private productsUrl = 'api/products'; 
+  private productsUrl = environment.apiURL + 'products';
 
   constructor(private http: HttpClient) { }
 
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.productsUrl)
-          .pipe(catchError(this.handleError<Product[]>([]))
+    return this.http.get<ProductGetResponse>(this.productsUrl)
+          .pipe(map(response => response._embedded.products),
+            catchError(this.handleError<Product[]>([]))
     );
   }
 
@@ -40,7 +49,8 @@ export class ProductService {
   }
 
   updateProduct(product: Product): Observable<any> {
-    return this.http.put(this.productsUrl, product, httpOptions).pipe(
+    const url = `${this.productsUrl}/${product.id}`;
+    return this.http.put(url, product, httpOptions).pipe(
       catchError(this.handleError<any>())
     );
   }

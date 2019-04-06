@@ -8,7 +8,11 @@
       <input [(ngModel)]="product.name" placeholder="name"/>
     </label>
   </div>
-  <div><span>Preço: </span>{{product.price}}</div>
+  <div>
+    <label>Preço:
+      <input [(ngModel)]="product.price" placeholder="price"/>
+    </label>
+  </div>
 
   <button (click)="save()">save</button>
 

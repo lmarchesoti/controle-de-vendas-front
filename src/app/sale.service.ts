@@ -5,23 +5,32 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Sale } from './sale';
+import { environment } from 'src/environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
+
+interface SaleGetResponse {
+  _embedded: {
+    sales: Sale[],
+    _links: {self: {href: string}};
+  };
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class SaleService {
 
-  private salesUrl = 'api/sales';
+  private salesUrl = environment.apiURL + 'sales';
 
   constructor(private http: HttpClient) { }
 
   getSales(): Observable<Sale[]> {
-    return this.http.get<Sale[]>(this.salesUrl)
-          .pipe(catchError(this.handleError<Sale[]>([]))
+    return this.http.get<SaleGetResponse>(this.salesUrl)
+          .pipe(map(response => response._embedded.sales),
+          catchError(this.handleError<Sale[]>([]))
     );
   }
 

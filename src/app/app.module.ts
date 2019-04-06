@@ -4,9 +4,6 @@ import { FormsModule } from '@angular/forms';
 
 import { HttpClientModule } from '@angular/common/http';
 
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from './in-memory-data.service';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SalesComponent } from './sales/sales.component';
@@ -26,10 +23,7 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    )
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
