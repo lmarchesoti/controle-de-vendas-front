@@ -1,19 +1,36 @@
 <h2>Produtos</h2>
-<div>
+
+<div style="padding: 5px">
   <label>Nome:
-    <input #productName />
+    <input #productName type="text"/>
   </label>
+  &nbsp;
   <label>Preço:
-    <input #productPrice />
+    <input #productPrice type="text"/>
   </label>
-  <button (click)="add(productName.value, productPrice.value); productName.value=''; productPrice.value=''">
+  &nbsp;
+  <button class="btn btn-primary"
+    (click)="add(productName.value, productPrice.value); productName.value=''; productPrice.value=''">
     Adicionar
   </button>
 </div>
-<ul class="products">
-  <li *ngFor="let product of products" 
-    routerLink="/product/{{product.id}}">
-    <span class="badge">{{product.id}}</span> {{product.name}} {{product.price}}
-    <button class="delete" title="delete product" (click)="delete(product)">x</button>
-  </li>
-</ul>
+
+<table class="products table table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Nome</th>
+      <th>Preço</th>
+      <th>Deletar</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products" 
+      routerLink="/product/{{product.id}}">
+      <td>{{product.id}}</td>
+      <td>{{product.name}}</td>
+      <td>{{product.price}}</td>
+      <td><button class="delete btn btn-danger" title="delete product" (click)="delete(product)">x</button></td>
+    </tr>
+  </tbody>
+</table>
